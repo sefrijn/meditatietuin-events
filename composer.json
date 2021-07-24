@@ -1,0 +1,19 @@
+{
+    "name": "sefrijn/meditatietuin-events",
+    "description": "WP Events Plugin",
+    "type": "wordpress-plugin",
+    "require": {
+        "stoutlogic/acf-builder": "^1.11"
+    },
+    "autoload": {
+        "psr-4": {
+            "Sefrijn\\MeditatietuinEvents\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "How About Yes",
+            "email": "sefrijn@gmail.com"
+        }
+    ]
+}
