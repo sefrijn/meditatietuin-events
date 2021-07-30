@@ -1,4 +1,132 @@
 @import 'tailwindcss/base';
-@import 'tailwindcss/components';
+@import 'container';
 @import 'tailwindcss/utilities';
 
+.text-shadow {
+	text-shadow: 0 0 8px rgba(0,0,0,0.40);
+}
+.date, .teacher{
+	span:not(:last-child){
+		&:after{
+			content: ' & ';
+		}
+	}
+}
+.category{
+	span:not(:last-child){
+		&:after{
+			content: ' - ';
+		}
+	}
+}
+
+.single-mt_events{
+	.label{
+		@apply text-orange-dark font-semibold font-sans text-base uppercase;
+	}
+	.details{
+		@apply font-semibold text-base text-black text-opacity-50;
+	}
+	main{
+		h2{
+			@apply text-orange-dark font-bold mt-6;
+		}
+		p{
+			@apply mb-2;
+		}
+	}
+
+	.pt-checkout-form{
+		@apply w-full border-none flex flex-wrap;
+		::placeholder {
+			@apply text-orange-dark;
+			opacity: 1;
+		}		
+		.pt-form-group-field-firstname, .pt-form-group-field-lastname, .pt-form-group-field-email, .pt-form-group-field-text{
+			@apply w-1/2 px-2;
+			label{
+				@apply hidden;
+			}
+			input{
+				@apply pt-2 pb-1 px-4 font-medium font-sans bg-orange-very-light;
+			}
+		}
+		.has-quantity-input{
+			@apply flex w-full mx-2 items-center relative;
+			label{
+				@apply order-1 w-1/2 text-right text-white text-2xl font-normal pr-5;
+			}
+			.pt-quantity-amount{
+				@apply flex w-5/12 justify-between items-center order-2 text-4xl font-semibold text-orange-medium;
+				&:after{
+					@apply block text-base text-black text-opacity-30;
+					content:' aantal  ';
+					white-space: pre;
+					line-height: 40px;
+				}
+			}
+			.pt-quantity-input{
+				@apply order-4 py-2 w-1/12 max-w-max bg-orange-light ml-0;
+			}
+			.pt-items-left{
+				@apply absolute -bottom-2 right-1/2 pr-4 text-xs text-orange-medium uppercase tracking-wide font-semibold;
+			}
+			.pt-form-alert{
+				@apply flex items-center bg-transparent p-0 text-white text-2xl font-normal text-left;
+				span{
+					@apply w-1/2 block;
+					/* width:50%; */
+					&:first-of-type{
+						@apply text-right pr-4;
+					}
+					&:last-of-type{
+						@apply text-orange-medium text-3xl;
+					}
+				}
+				width:200%;
+			}
+		}
+		.pt-form-group-label:not(.has-quantity-input){
+			@apply w-full;
+			label{
+				@apply w-1/2 text-right text-white text-2xl font-normal pr-5 relative;
+				span{
+					@apply absolute w-1/2 left-full text-4xl text-left font-semibold text-orange-medium-dark;
+				}
+			}
+		}
+		.pt-form-group-total-amount{
+			@apply pt-4 w-full font-normal border-t-4 border-dotted border-orange-medium-dark text-2xl text-right text-white;
+			span{
+				@apply text-4xl w-1/2 float-right text-left ml-4 text-orange-light font-bold;
+			}
+		}
+		.pt-payment-btn{
+			@apply bg-orange-light text-orange-dark hover:bg-orange-very-light rounded-none mx-auto;	
+		}		
+	}
+}
+.triangle-red{
+	@apply relative;
+	&:before{
+		@apply absolute top-0 left-1/2;
+		content:'';
+		display:block;
+		width: 0; 
+		height: 0; 
+		border-left: 30px solid transparent;
+		border-right: 30px solid transparent;
+		border-top: 30px solid #FDE8DA;
+		transform:translateX(-50%);
+	}
+	&:after{
+		@apply bg-orange-light absolute block bottom-8 w-1/4 left-1/2;
+		content:'';
+		height:1px;
+		transform:translateX(-50%);
+	}
+}
+
+::selection {
+	@apply bg-orange-dark text-white;
+}
