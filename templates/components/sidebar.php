@@ -12,7 +12,7 @@
 			<?php include($plugin_dir.'/templates/components/sidebar-tickets.php'); ?>
 		</p>
 		<div class="">
-			<button class="font-sans-alt mt-5 w-full block bg-orange-light hover:bg-orange-medium transition-colors text-orange-dark text-xl uppercase px-4 py-2">Inschrijven</button>
+			<a href="#tickets" class="scrollto font-sans-alt mt-5 w-full block bg-orange-light hover:bg-orange-medium transition-colors text-orange-dark text-center text-xl uppercase px-4 py-2">Inschrijven</a>
 		</div>
 	</div>
 	<div class="">

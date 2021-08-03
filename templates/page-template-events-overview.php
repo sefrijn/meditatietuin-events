@@ -17,7 +17,7 @@
 	</section>
 
 	<section class="filter z-20 relative">
-		<div class="flex items-center justify-center p-12">
+		<div class="flex items-center justify-center pb-4">
 			<?php $filter = "category"; ?>
 			<?php include($plugin_dir.'/templates/components/filter.php'); ?>
 			<?php $filter = "teacher"; ?>
@@ -65,6 +65,9 @@
 		}
 		wp_reset_postdata();
 		?>
+		<div class="text-center w-full py-12">
+			<a href="#" class="font-sans-alt mt-5 inline-block mx-auto bg-orange-light hover:bg-orange-medium transition-colors text-orange-dark text-center text-xl uppercase px-4 py-2">Meer laden...</a>
+		</div>
 	</section>
 </div>
 <?php the_content(); ?>
