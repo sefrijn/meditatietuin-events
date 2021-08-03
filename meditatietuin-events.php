@@ -31,7 +31,7 @@
 
 
 // Configuration variables
-$events_per_page = 9;
+$events_per_page = 3;
 $plugin_dir = WP_PLUGIN_DIR . '/meditatietuin-events';
 $plugin_url = WP_PLUGIN_URL . '/meditatietuin-events';
 
