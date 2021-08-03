@@ -19,11 +19,28 @@
 		}
 	}
 }
-
-.single-mt_events{
+.single-mt_events, .page-template-page-template-events-overview{
 	.label{
 		@apply text-orange-dark font-semibold font-sans text-base uppercase;
 	}
+}
+
+.page-template-page-template-events-overview{
+	.event-item{
+		&:hover{
+			.teacher{
+				@apply text-orange-dark;
+			}
+		}
+	}
+	.dropdown:focus-within .dropdown-menu {
+		opacity:1;
+		transform: translate(0) scale(1);
+		visibility: visible;
+	}	
+}
+
+.single-mt_events{
 	.details{
 		@apply font-semibold text-base text-black text-opacity-50;
 	}
@@ -42,14 +59,27 @@
 			@apply text-orange-dark;
 			opacity: 1;
 		}		
-		.pt-form-group-field-firstname, .pt-form-group-field-lastname, .pt-form-group-field-email, .pt-form-group-field-text{
+		.pt-form-group-field-firstname, .pt-form-group-field-lastname, .pt-form-group-field-email, .pt-form-group-field-text, .pt-form-group-field-date, .pt-form-group-field-dropdown, .pt-form-group-field-textarea{
 			@apply w-1/2 px-2;
 			label{
 				@apply hidden;
 			}
-			input{
-				@apply pt-2 pb-1 px-4 font-medium font-sans bg-orange-very-light;
+			input, select, textarea{
+				@apply pt-2 pb-1 px-4 text-lg font-medium font-sans bg-orange-very-light rounded-none border-none;
 			}
+			select{
+				@apply text-orange-dark;
+			}
+		}
+		.pt-form-group-field-textarea{
+			@apply w-full;
+			label{
+				@apply block text-orange-light;
+			}
+			textarea{
+				@apply w-full h-28 resize-none;
+			}
+
 		}
 		.has-quantity-input{
 			@apply flex w-full mx-2 items-center relative;
@@ -85,6 +115,12 @@
 				}
 				width:200%;
 			}
+		}
+		.pt-form-group-label{
+			@apply mt-4;
+		}
+		.pt-form-group-label + .pt-form-group-label{
+			@apply mt-0;
 		}
 		.pt-form-group-label:not(.has-quantity-input){
 			@apply w-full;
@@ -128,5 +164,6 @@
 }
 
 ::selection {
-	@apply bg-orange-dark text-white;
+	@apply text-white;
+	background-color: #da9b74;
 }

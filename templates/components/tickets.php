@@ -21,11 +21,26 @@ function createTicket(){
 			$tickets_code .= '[paytium_field placeholder="Achternaam" type="lastname" label="Achternaam" required="true" /]';
 			$tickets_code .= '[paytium_field placeholder="Email" type="email" label="Email" required="true" /]';
 			$tickets_code .= '[paytium_field placeholder="Telefoon" type="text" label="Telefoon" /]';
+			if(get_field('extra_velden')['geboortedatum'] && get_field('extra_velden')['geboortedatum'] != "") {
+				$tickets_code .= '[paytium_field placeholder="Geboortedatum (dd-mm-yy)" type="date" label="Geboortedatum" required="true" /]';
+			}
+			if(get_field('extra_velden')['geslacht'] && get_field('extra_velden')['geslacht'] != "") {
+				$tickets_code .= '[paytium_field type="dropdown" first_option="text" first_option_text="Geslacht" label="Geslacht" options="Man/Vrouw/Queer" required="true" /]';
+			}
+			if(get_field('extra_velden')['extra_opmerkingen'] && get_field('extra_velden')['extra_opmerkingen'] != "") {
+				$uitleg = "Extra Opmerkingen?";
+				if(get_field('extra_velden')['toelichting_voor_bezoekers']){
+					$uitleg = get_field('extra_velden')['toelichting_voor_bezoekers'];
+				}
+				$tickets_code .= '[paytium_field placeholder="Je antwoord" type="textarea" label="'.$uitleg.'" required="false" /]';
+			}
+
+
 			$today = strtotime(date("m/d/Y"));
 			if( have_rows('tickets') ){
 				while( have_rows('tickets') ){
 					the_row();
-					echo get_sub_field('enddate');
+					// echo get_sub_field('enddate');
 					// echo '<br>';
 					// echo $today;
 

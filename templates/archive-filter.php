@@ -9,10 +9,24 @@
 <?php $plugin_dir = WP_PLUGIN_DIR . '/meditatietuin-events'; ?>
 <?php $plugin_url = WP_PLUGIN_URL . '/meditatietuin-events'; ?>
 
+<?php 
+$args = [
+    'post_type' => 'page',
+    'fields' => 'ids',
+    'nopaging' => true,
+    'meta_key' => '_wp_page_template',
+    'meta_value' => 'page-template-events-overview.php'
+];
+$pages = get_posts( $args );
+$page_id = -1;
+foreach ( $pages as $page ) 
+    $page_id = $page;
+ ?>
+
 <div class="bg-orange-very-light">
 
 	<section class="top tw-container max-w-prose mx-auto py-16 text-center">
-		<h1 class="text-4xl mb-6 font-semibold"><?php the_title(); ?></h1>
+		<h1 class="text-4xl mb-6 font-semibold"><?php the_archive_title(); ?></h1>
 		<p class="text-xl text-orange-dark font-medium font-sans-alt"><?php the_field('subtitle'); ?></p>
 	</section>
 
@@ -67,5 +81,5 @@
 		?>
 	</section>
 </div>
-<?php the_content(); ?>
+<?php echo apply_filters('the_content', get_post_field('post_content', $page_id)); ?>
 <?php get_footer(); ?>

@@ -19,7 +19,7 @@
 		<img class="w-full" src="<?php echo plugin_dir_url(__DIR__) ?>../img/wave-green-small.svg" alt="">
 	</div>
 	<div class="bg-green-dark pb-3 px-4 rounded-b-2xl text-center">
-		<p class="-mt-8 mb-1 label text-orange-dark font-semibold text-sm uppercase">Wie</p>
+		<p class="-mt-8 mb-1 label text-orange-dark font-semibold text-sm uppercase">Facilitator</p>
 
 		<?php foreach ( $authors as $author) { ?>
 			<div class="teacher_profile mb-3 flex flex-col items-center">

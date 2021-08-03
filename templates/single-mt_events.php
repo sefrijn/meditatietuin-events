@@ -21,4 +21,6 @@
 <?php include($plugin_dir.'/templates/components/tickets.php'); ?>
 
 <?php echo do_shortcode('[elementor-template id="3610"]'); ?>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <?php get_footer(); ?>
