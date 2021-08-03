@@ -15,18 +15,25 @@
 * - Events post type
 * - Teachers Taxonomy
 * - Category Taxonomy
-* - Hide category parent dropdown
-* Register 4 Templates
-* - Single Event
-* - Overview & Filters - Archive pages
-* - Overview - Page template
+* -- Taxonomy fix - hide parent dropdown
+* Register 3 Templates
+* - 1. Single Event
+* - 2. Overview & Filters - Archive pages
+* - 3. Overview - Page template
 * Stylesheet
-* Scripts
+* Script
 * Custom Fields
-* Teacher Fields
-* Overview Fields
-* - Remove default description box
+* - Event Single
+* - Teacher Fields
+* - Overview Fields
+* Add Fields to admin area
 */
+
+
+// Configuration variables
+$events_per_page = 9;
+$plugin_dir = WP_PLUGIN_DIR . '/meditatietuin-events';
+$plugin_url = WP_PLUGIN_URL . '/meditatietuin-events';
 
 
 /*
@@ -55,6 +62,8 @@ function mt_custom_post_type() {
             'labels'      => array(
                 'name'          => __('Events', 'mt_events'),
                 'singular_name' => __('Event', 'mt_events'),
+                'add_new'       => __( 'Nieuw Event', 'mt_events' ),
+                'add_new_item'  => __( 'Nieuw Event', 'mt_events' ),
             ),
             'menu_icon' => 'dashicons-calendar-alt',
             'public'      => true,
@@ -115,7 +124,7 @@ add_action('init', 'mt_custom_post_type');
 
 /*
 
->> Hide category parent dropdown
+>>> Taxonomy fix - hide parent dropdown
 
 */
 add_filter( 'post_edit_category_parent_dropdown_args', 'hide_parent_dropdown_select' );
@@ -135,11 +144,11 @@ function hide_parent_dropdown_select( $args ) {
 
 /* 
 
-> Register 4 Templates
+> Register 3 Templates
 
 */
 
-// >> Single Event
+// >> 1. Single Event
 function load_event_template( $template ) {
     global $post;
 
@@ -151,7 +160,7 @@ function load_event_template( $template ) {
 }
 add_filter( 'single_template', 'load_event_template' );
 
-// >> Overview & Filters - Archive pages
+// >> 2. Overview & Filters - Archive pages
 function event_archive_template( $template ) {
     // Category archive
     if ( is_archive() && property_exists(get_queried_object(),'taxonomy') ) {
@@ -179,7 +188,7 @@ function event_archive_template( $template ) {
 }
 add_filter('template_include', 'event_archive_template');
 
-// >> Overview - Page template
+// >> 3. Overview - Page template
 function add_page_template ($templates) {
     $templates['page-template-events-overview.php'] = 'Events Overview';
     return $templates;
@@ -194,24 +203,46 @@ function redirect_page_template ($template) {
     }
 add_filter ('page_template', 'redirect_page_template');
 
-// > Stylesheet
+
+/* 
+
+> Stylesheet
+
+*/
 wp_register_style('style_css', plugin_dir_url(__FILE__) . 'dist/styles/style.css');
-
-// > Scripts
-wp_register_script('app_js', plugin_dir_url(__FILE__) . 'dist/scripts/app.js',array('jquery'));
-
 add_action( 'wp_enqueue_scripts', 'mt_style', 99 );
 function mt_style(){
     wp_enqueue_style('style_css');
 }
+
+
+/* 
+
+> Script
+
+*/
+wp_register_script('app_js', plugin_dir_url(__FILE__) . 'dist/scripts/app.js',array('jquery'));
 add_action( 'wp_enqueue_scripts', 'mt_script', 0 );
 function mt_script(){
     wp_enqueue_script('app_js');
+
+    $js_urls = array( 
+        'plugin_url' => plugins_url(),
+        'base_url' => site_url()
+    );
+    wp_localize_script( 'app_js', 'js_urls', $js_urls );     
+    
 }
 
 
 
-// > Custom Fields
+/*
+
+> Custom Fields
+
+*/
+
+// >> Event Single
 $event = new FieldsBuilder('event');
 $event
 ->addImage('banner',[
@@ -271,6 +302,13 @@ $event
             'return_format' => 'H:i',
         ])
 ->endGroup()
+// ->addTrueFalse('fixed',[
+//         'label' => 'Vaste positie in evenementen overzicht?',
+//         'instructions' => 'Herhalende evenementen staan standaard bovenaan.<br>Zet dit vinkje uit als je dat niet wil. De datum van het event bepaald dan de positie.',
+//         'ui' => true,
+//         'default_value' => 1
+//         ])
+//     ->conditional('event_type','==','herhalend')
 ->addRepeater('tickets',[
         'layout' => 'table',
         'min' => 1,
@@ -335,7 +373,7 @@ add_action('acf/init', function() use ($event) {
    acf_add_local_field_group($event->build());
 });
 
-// > Teacher Fields
+// >> Teacher Fields
 $teacher_fields = new FieldsBuilder('teacher_info');
 $teacher_fields
 ->addTextarea('beschrijving',[
@@ -355,7 +393,21 @@ add_action('acf/init', function() use ($teacher_fields) {
    acf_add_local_field_group($teacher_fields->build());
 });
 
-// > Overview Fields
+// Remove default description box with teachers and categories
+function hide_cat_descr() { ?>
+
+    <style type="text/css">
+       .term-description-wrap {
+           display: none;
+       }
+    </style>
+
+<?php } 
+
+add_action( 'admin_head-term.php', 'hide_cat_descr' );
+add_action( 'admin_head-edit-tags.php', 'hide_cat_descr' );
+
+// >> Overview Fields
 $overview_page = new FieldsBuilder('overview_page');
 $overview_page
 ->addTextarea('subtitle',[
@@ -370,18 +422,33 @@ add_action('acf/init', function() use ($overview_page) {
    acf_add_local_field_group($overview_page->build());
 });
 
-// >> Remove default description box
-function hide_cat_descr() { ?>
 
-    <style type="text/css">
-       .term-description-wrap {
-           display: none;
-       }
-    </style>
+/*
 
-<?php } 
+> Add Fields to admin area
 
-add_action( 'admin_head-term.php', 'hide_cat_descr' );
-add_action( 'admin_head-edit-tags.php', 'hide_cat_descr' );
+*/
+function add_acf_columns ( $columns ) {
+   return array_merge ( $columns, array ( 
+     'field_event_datum_start' => __ ( 'Starts' ),
+   ) );
+ }
+ add_filter ( 'manage_mt_events_posts_columns', 'add_acf_columns' );
+
+function mt_events_custom_column ( $column, $post_id ) {
+    switch ( $column ) {
+        case 'field_event_datum_start':
+        if(get_field('datum_start',$post_id)){
+            echo get_field('datum_start',$post_id);
+        }elseif(get_field('data',$post_id)){
+            echo get_field('data',$post_id)[0]['datum'];
+        }elseif(get_field('frequentie',$post_id)){
+            echo get_field('frequentie',$post_id);
+        }
+        break;
+    }
+}
+add_action ( 'manage_mt_events_posts_custom_column', 'mt_events_custom_column', 10, 2 );
+
 
 ?>

@@ -1,54 +1,146 @@
-<?php 
-$my_query = new WP_Query($args);
+<?php
 
-if( $my_query->have_posts() ) {
-	while ( $my_query->have_posts() ) : $my_query->the_post();
+$sort_by = "";
+$filter_cat = array();
+if(!empty($mt_category)){
+	$filter_cat = array(
+    	array(
+        	'taxonomy' => 'mt_category',
+        	'field'    => 'slug',
+        	'terms'    => $mt_category,
+    	),
+	);
+}
+if(!empty($teacher)){
+	$filter_cat = array(
+    	array(
+        	'taxonomy' => 'teacher',
+        	'field'    => 'slug',
+        	'terms'    => $teacher,
+    	),
+	);
+}	
+// $filter_teacher = 
+$meta_key = 'frequentie';
+$args = array(
+	'post_status' => array(
+		'future'
+	),
+	'post_type' => 'mt_events',
+	'posts_per_page' => $events_per_page,
+	'paged' => $page_number,
+	'tax_query' => $filter_cat,
 
-		// Get categories to add as a class
-		$categories = get_the_terms(get_the_ID(),'categories');
-		$cat_result = "";
-		if ( $categories && ! is_wp_error( $categories ) ) { 
-			$cat_list = array(); 
-			foreach ( $categories as $category ) {
-				$cat_list[] = $category->slug;
-			}
-			$cat_result = join( " ", $cat_list );
-		}
+	// WORKING WITH EXTRA FIELD
+	'meta_query'  => array(
+		'relation' => 'OR',
+		array(
+			'key'     => $meta_key,
+			'compare' => 'NOT EXISTS',
+		),
+		// array(
+			// 'relation' => 'OR',
+			// array(
+			// 	'key'   => $meta_key,
+			// 	'value' => 22,
+			// ),
+			array(
+				'key'     => $meta_key,
+				'value'   => 1,
+				'compare' => '!=',
+			),
+		// ),
+		array(
+			'key'     => $meta_key,
+			'value'   => 1,
+			// 'compare' => '!=',
+		),
 
-		// Get markets to add as a class
-		$markets = get_the_terms(get_the_ID(),'markets');
-		$markets_result = "";
-		if ( $markets && ! is_wp_error( $markets ) ) { 
-			$markets_list = array(); 
-			foreach ( $markets as $market ) {
-				$markets_list[] = $market->slug;
-			}
-			$markets_result = join( " ", $markets_list );
-		}
-		?>
+	),
+	'orderby'     => array( 'meta_value' => 'DESC', 'date' => 'ASC' ),
 
-		<a href="<?php echo get_the_permalink(); ?>" class="block block-image" style="opacity:0;" data-categories="<?php echo $cat_result; ?>" data-markets="<?php echo $markets_result; ?>" data-sorting="<?php echo get_post_field( 'menu_order', get_the_id()); ?>">
-			<div class="image-wrapper">
-				<div class="image">
-				<?php if ( has_post_thumbnail()) {
-					the_post_thumbnail('work-overview');
-				} ?>
-				</div>
-				<div class="content-wrapper content-pink">
-					<div class="content">
-						<?php if(get_field('overview_more',get_the_ID())){ ?>
-							<h3 class="subtitle"><?php echo get_field('overview_more',get_the_ID()); ?></h3>
-						<?php }else{ ?>
-							<h3 class="subtitle"><?php _e('read more','vb'); ?></h3>
-						<?php } ?>
-					</div>
+
+// // NEW
+// 	'meta_query'  => array(
+// 		'relation' => 'OR',
+// 		// array(
+// 		// 	'key'     => $meta_key,
+// 		// 	'compare' => 'EXISTS',
+// 		// ),
+// 		// array(
+// 			// 'relation' => 'OR',
+// 			// array(
+// 			// 	'key'   => $meta_key,
+// 			// 	'value' => 22,
+// 			// ),
+// 		// ),
+// 		array(
+// 			'key'     => $meta_key,
+// 			'value'   => 'herhalend',
+// 			'compare' => '==',
+// 		),
+// 		array(
+// 			'key'     => $meta_key,
+// 			'value'   => 'herhalend',
+// 			'compare' => '!=',
+// 		),
+
+// 	),
+// 	// 'orderby'     => array( 'meta_value' => 'DESC', 'date' => 'ASC' ),	
+// 	'orderby'     => array( 'date' => 'ASC' ),	
+
+
+
+	// 'meta_query' => array(
+	// 	'relation' => 'OR',
+	// 	array(
+	// 		'key' => 'fixed',
+	// 		'compare' => 'NOT EXISTS',
+	// 	),			
+	// 	array(
+	// 		'key' => 'fixed',
+	// 		'compare' => 'EXISTS',
+	// 	),
+	// ),
+ //    // 'meta_key' => 'fixed',
+ //    'orderby' => 'fixed date',
+
+	// // 'orderby' => array(
+	// // 	'title' => 'ASC',
+	// // 	// 'date' => 'ASC'
+	// // ),
+	// 'order' => 'ASC'
+);
+
+$query1 = new WP_Query( $args );
+$total_pages = $query1->max_num_pages;
+
+while ( $query1->have_posts() ) {
+	$query1->the_post(); ?>
+
+	<?php $authors = get_the_terms(get_the_ID(), 'teacher'); ?>
+	<?php $tags = get_the_terms(get_the_ID(), 'mt_category'); ?>
+	<a href="<?php echo get_the_permalink(); ?>" class="event-item block w-1/3 p-4 rounded-xl hover:bg-orange-light transition-colors hover:cursor-pointer">
+		<div class="relative h-60">
+			<img class="z-0 object-cover h-full w-full" src="<?php the_field('banner'); ?>" alt="">
+			<div class="absolute bottom-0 w-full bg-gradient-to-t from-black bg-opacity-30 z-10 text-center text-white">
+				<div class="text-shadow my-2 text-lg font-semibold text-white date">
+					<?php include($plugin_dir.'/templates/components/cover-date.php'); ?>
 				</div>
 			</div>
-			<h3 class="text-center"><?php the_title(); ?></h3>
-		</a>
-	<?php 
-	endwhile;
+		</div>
+		<div class="text-center">
+			<h3 class="text-2xl mt-5 tracking-wide normal-case text-black font-semibold"><?php the_title(); ?></h3>
+			<p class="my-2 font-normal text-orange-medium teacher">met
+				<?php 
+				foreach ( $authors as $author) { ?>
+					<span><?php echo $author->name; ?></span>
+				<?php } ?>	
+			</p>
+			<p><?php the_field('samenvatting'); ?> </p>
+		</div>
+	</a>
+	<?php
 }
-
-
+wp_reset_postdata();
 ?>

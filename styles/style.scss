@@ -25,7 +25,7 @@
 	}
 }
 
-.page-template-page-template-events-overview{
+.page-template-page-template-events-overview, .tax-mt_category, .tax-teacher{
 	.event-item{
 		&:hover{
 			.teacher{
@@ -39,6 +39,16 @@
 		visibility: visible;
 	}	
 }
+/* .tax-mt_category, .tax-teacher{
+	.top{
+		h1:last-of-type{
+			@apply text-orange-medium font-bold text-sm uppercase;
+			span{
+				@apply text-black text-3xl font-bold normal-case block;
+			}
+		}
+	}
+} */
 
 .single-mt_events{
 	.details{

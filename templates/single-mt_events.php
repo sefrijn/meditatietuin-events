@@ -1,6 +1,4 @@
 <?php get_header(); ?>
-<?php $plugin_dir = WP_PLUGIN_DIR . '/meditatietuin-events'; ?>
-<?php $plugin_url = WP_PLUGIN_URL . '/meditatietuin-events'; ?>
 <?php $authors = get_the_terms(get_the_ID(), 'teacher'); ?>
 <?php $tags = get_the_terms(get_the_ID(), 'mt_category'); ?>
 

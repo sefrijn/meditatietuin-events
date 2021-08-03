@@ -1,16 +1,23 @@
-<div class="relative inline-block text-left dropdown">
-	<span class="rounded-md shadow-sm"
-	><button class="inline-flex justify-center w-full px-4 py-2 text-sm font-medium leading-5 text-gray-700 transition duration-150 ease-in-out bg-white border border-gray-300 rounded-md hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800" 
-	type="button" aria-haspopup="true" aria-expanded="true" aria-controls="headlessui-menu-items-117">
-	<span><?php echo ucfirst($filter); ?></span>
-	<svg class="w-5 h-5 ml-2 -mr-1" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-	</button
-	></span>
-	<div class="opacity-0 invisible dropdown-menu transition-all duration-300 transform origin-top-right -translate-y-2 scale-95">
-		<div class="absolute left-0 w-56 mt-2 origin-top-left bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg outline-none" aria-labelledby="headlessui-menu-button-1" id="headlessui-menu-items-117" role="menu">
-			<div class="py-1">
-				<?php include($plugin_dir.'/templates/components/filter-'.$filter.'.php'); ?>
-			</div>
-		</div>
-	</div>              
-</div>
+<section class="filter z-20 relative">
+	<div class="flex space-x-4 items-center justify-center pb-4">
+		<?php if(is_archive()){ ?>
+			<a href="<?php echo get_the_permalink($page_id); ?>" class="inline-block justify-center px-4 py-2 text-base font-medium leading-5 text-orange-dark transition duration-150 ease-in-out hover:text-gray-700 hover:bg-orange-medium focus:bg-orange-light rounded-md focus:outline-none focus:border-orange-dark active:bg-orange-medium active:text-gray-800">Verwijder filter 
+				<svg class="inline-block h-3 w-3 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="-949 951 100 125">
+					<path d="M-851.5 966.2l-12.7-12.7-34.8 34.8-34.8-34.8-12.7 12.7 34.8 34.8-34.8 34.8 12.7 12.7 34.8-34.8 34.8 34.8 12.7-12.7-34.8-34.8z"/>
+				</svg>
+			</a>
+		<?php }else{ ?>
+			<span class="inline-block justify-center px-4 py-2 text-base font-medium leading-5 text-orange-dark transition duration-150 ease-in-out rounded-md">Filter Events 
+				<svg class="inline-block h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 40">
+				    <path d="M3 7h1v2a1 1 0 001 1h6a1 1 0 001-1V7h17a1 1 0 000-2H12V3a1 1 0 00-1-1H5a1 1 0 00-1 1v2H3a1 1 0 000 2zm3-3h4v4H6V4zM29 15h-3v-2a1 1 0 00-1-1h-6a1 1 0 00-1 1v2H3a1 1 0 000 2h15v2a1 1 0 001 1h6a1 1 0 001-1v-2h3a1 1 0 000-2zm-5 3h-4v-4h4v4zM29 25H16v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2H3a1 1 0 000 2h5v2a1 1 0 001 1h6a1 1 0 001-1v-2h13a1 1 0 000-2zm-15 3h-4v-4h4v4z"/>
+				</svg>
+			</span>
+		<?php } ?>
+		<?php $taxonomy = "mt_category"; ?>
+		<?php $name = "Categorie" ?>
+		<?php include($plugin_dir.'/templates/helpers/get_filter_list.php'); ?>
+		<?php $taxonomy = "teacher"; ?>
+		<?php $name = "Teacher" ?>
+		<?php include($plugin_dir.'/templates/helpers/get_filter_list.php'); ?>
+	</div>
+</section>
