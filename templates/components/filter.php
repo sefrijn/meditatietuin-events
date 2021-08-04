@@ -1,6 +1,39 @@
+<?php 
+$filtered_month = "";
+if ($_GET['maand']) {
+	$filtered_month = $_GET['maand'];
+	$dutch_months = array('januari','februari','maart','april','mei','juni','juli','augustus','september','oktober','november','december');
+	$numbered_months = array(1,2,3,4,5,6,7,8,9,10,11,12);
+	$filtered_month_array = explode('-',$filtered_month);
+	$filtered_month_array[0] = sprintf('%02d', str_replace($dutch_months,$numbered_months,$filtered_month_array[0]));
+
+	// print_r($filtered_month_array);
+	$filtered_month_english = '01-'.implode('-',$filtered_month_array);
+	// $english_months = array('january','february','march','may','june')
+	// str_replace()
+	// setlocale(LC_TIME, "nl_NL");		
+	// $dateObj = DateTime::createFromFormat('d %B %G', "20 augustus 2021");
+	// echo "date: ".$dateObj;
+// 
+	// echo strftime(" %d %h %Y",strtotime(str_replace('-',' ','1 august 2021')));
+
+	// $current_month = date_parse($filtered_month);
+	// print_r($current_month);
+	// $months = array();
+	// $months_written = array();
+	// for ($i=0; $i < 8; $i++) { 
+	// 	$months[$i] = date("01-m-Y", strtotime(" +".$i." months"));
+	// 	setlocale(LC_TIME, "nl_NL");		
+	// 	$dateObj = DateTime::createFromFormat('d-m-Y', $months[$i]);
+	// 	$months_written[$i] = strftime("%B", $dateObj->getTimestamp());
+	// }
+}
+
+?>
+
 <section class="filter z-20 relative">
 	<div class="flex space-x-4 items-center justify-center pb-4">
-		<?php if(is_archive()){ ?>
+		<?php if(is_archive() || $filtered_month != ""){ ?>
 			<a href="<?php echo get_the_permalink($page_id); ?>" class="inline-block justify-center px-4 py-2 text-base font-medium leading-5 text-orange-dark transition duration-150 ease-in-out hover:text-gray-700 hover:bg-orange-medium focus:bg-orange-light rounded-md focus:outline-none focus:border-orange-dark active:bg-orange-medium active:text-gray-800">Verwijder filter 
 				<svg class="inline-block h-3 w-3 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="-949 951 100 125">
 					<path d="M-851.5 966.2l-12.7-12.7-34.8 34.8-34.8-34.8-12.7 12.7 34.8 34.8-34.8 34.8 12.7 12.7 34.8-34.8 34.8 34.8 12.7-12.7-34.8-34.8z"/>
@@ -15,9 +48,21 @@
 		<?php } ?>
 		<?php $taxonomy = "mt_category"; ?>
 		<?php $name = "Categorie" ?>
+		<?php $terms = get_terms(array(
+					'taxonomy' => $taxonomy,
+					'hide_empty' => false
+				)); ?>
 		<?php include($plugin_dir.'/templates/helpers/get_filter_list.php'); ?>
 		<?php $taxonomy = "teacher"; ?>
 		<?php $name = "Teacher" ?>
+		<?php $terms = get_terms(array(
+					'taxonomy' => $taxonomy,
+					'hide_empty' => false
+				)); ?>
 		<?php include($plugin_dir.'/templates/helpers/get_filter_list.php'); ?>
+		<?php $taxonomy = "none"; ?>
+		<?php $name = "Datum" ?>
+		<?php $terms = ""; ?>
+		<?php include($plugin_dir.'/templates/helpers/get_filter_list.php'); ?>		
 	</div>
 </section>

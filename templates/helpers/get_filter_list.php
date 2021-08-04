@@ -4,8 +4,13 @@ if(get_queried_object()->taxonomy === $taxonomy){
 	$name = get_queried_object()->name;
 	$active = true;
 }
- ?>
-
+if($taxonomy == "none"){
+	if($filtered_month != ""){
+		$name = str_replace("-"," ",$filtered_month);
+		$active = true;
+	}
+}
+?>
 <div class="relative inline-block text-left dropdown">
 	<span class="rounded-md"
 	><button class="<?php if($active){ echo 'bg-orange-light '; } ?>inline-flex justify-center w-full px-4 py-2 text-base font-medium leading-5 text-gray-700 transition duration-150 ease-in-out hover:bg-orange-medium focus:bg-orange-light rounded-md focus:outline-none focus:border-orange-dark active:bg-orange-medium active:text-gray-800" 
@@ -21,15 +26,50 @@ if(get_queried_object()->taxonomy === $taxonomy){
 					Alles
 				</a>
 
-				<?php $terms = get_terms(array(
-					'taxonomy' => $taxonomy,
-					'hide_empty' => false
-				));
-				foreach( $terms as $term){ ?>
-					<a href="<?php echo get_term_link($term); ?>" class="<?php if($name == $term->name){ echo 'bg-orange-light '; } ?> text-gray-700 block px-4 py-2 text-sm font-medium" role="menuitem" tabindex="-1">
-						<?php echo $term->name; ?>
-					</a>
-				<?php } ?>
+				<?php 
+				if ($terms == ""){
+					$current_month = date('01-m-Y');
+					$months = array();
+					$months_written = array();
+					$months_english = array();
+					for ($i=0; $i < 8; $i++) { 
+						$months[$i] = date("01-m-Y", strtotime(" +".$i." months"));
+						setlocale(LC_TIME, "nl_NL");		
+						$dateObj = DateTime::createFromFormat('d-m-Y', $months[$i]);
+						$months_written[$i] = strftime("%B-%G", $dateObj->getTimestamp());
+						// $months_english[$i] = $dateObj->format('F-Y');
+					}
+					
+
+					// $current_month = date('m-Y');
+					// $months = array();
+					// for ($i=0; $i < 8; $i++) { 
+					// 	// $months[$i] = ($current_month+$i <= 12) ? $current_month+$i : $current_month+$i-12;
+					// 	$months[$i] = date("m-Y", strtotime(" +2 months"));
+					// }
+					foreach ($months_written as $index => $month_name) {
+						// setlocale(LC_TIME, "nl_NL");
+						// $dateObj = DateTime::createFromFormat('!n', $monthNum);
+						// $monthName = $dateObj->format('F');
+						// $formatted_time = strftime("%B", $dateObj->getTimestamp());
+						 ?>
+						<a href="<?php echo get_the_permalink($page_id)."?maand=".strtolower($month_name); ?>" class="<?php if($name == $term->name){ echo 'bg-orange-light '; } ?> text-gray-700 block px-4 py-2 text-sm font-medium" role="menuitem" tabindex="-1">
+							<?php echo str_replace("-"," ",ucwords($month_name)); 
+							//echo date('m', strtotime($date));
+							?>
+						</a>						
+					<?php }
+
+
+					// $terms = "";
+				}else{
+					foreach( $terms as $term){ ?>
+						<a href="<?php echo get_term_link($term); ?>" class="<?php if($name == $term->name){ echo 'bg-orange-light '; } ?> text-gray-700 block px-4 py-2 text-sm font-medium" role="menuitem" tabindex="-1">
+							<?php echo $term->name; ?>
+						</a>
+					<?php 
+					}
+				} ?>
 			</div>
 		</div>
 	</div>              

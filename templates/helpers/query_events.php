@@ -11,6 +11,35 @@ if(!empty($mt_category)){
     	),
 	);
 }
+if(isset($daterange_start)){
+	$filter_date = array(
+		'relation' => 'AND',
+		array(
+			'key' => 'datum_start',
+			'compare' => '>=',
+			'value' => date("Ymd",strtotime($daterange_start))
+		),
+		array(
+			'key' => 'datum_start',
+			'compare' => '<',
+			'value' => date("Ymd",strtotime($daterange_end))
+		),
+	);
+}else{
+	$filter_date = array(
+		'relation' => 'OR',
+		array(
+			'key' => 'datum_start',
+			'compare' => '>',
+			'value' => date("Ymd")
+		),
+		array(
+			'key' => 'event_type',
+			'compare' => '==',
+			'value' => 'herhalend'
+		)
+	);
+}
 if(!empty($teacher)){
 	$filter_cat = array(
     	array(
@@ -30,19 +59,7 @@ $args = array(
 	'paged' => $page_number,
 	'tax_query' => $filter_cat,
 	'meta_key' => $meta_key,
-	'meta_query' => array(
-		'relation' => 'OR',
-		array(
-			'key' => 'datum_start',
-			'compare' => '>',
-			'value' => date("Ymd")
-		),
-		array(
-			'key' => 'event_type',
-			'compare' => '==',
-			'value' => 'herhalend'
-		)
-	),
+	'meta_query' => $filter_date,
 	'orderby' => 'meta_value_num',
 	'order' => 'ASC'
 	// 'meta_query'  => array(
