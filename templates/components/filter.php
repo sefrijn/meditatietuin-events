@@ -1,34 +1,16 @@
 <?php 
 $filtered_month = "";
 if ($_GET['maand']) {
+	// Set Dutch month
 	$filtered_month = $_GET['maand'];
+
+	// Set English numbered month for filters
 	$dutch_months = array('januari','februari','maart','april','mei','juni','juli','augustus','september','oktober','november','december');
 	$numbered_months = array(1,2,3,4,5,6,7,8,9,10,11,12);
 	$filtered_month_array = explode('-',$filtered_month);
 	$filtered_month_array[0] = sprintf('%02d', str_replace($dutch_months,$numbered_months,$filtered_month_array[0]));
-
-	// print_r($filtered_month_array);
 	$filtered_month_english = '01-'.implode('-',$filtered_month_array);
-	// $english_months = array('january','february','march','may','june')
-	// str_replace()
-	// setlocale(LC_TIME, "nl_NL");		
-	// $dateObj = DateTime::createFromFormat('d %B %G', "20 augustus 2021");
-	// echo "date: ".$dateObj;
-// 
-	// echo strftime(" %d %h %Y",strtotime(str_replace('-',' ','1 august 2021')));
-
-	// $current_month = date_parse($filtered_month);
-	// print_r($current_month);
-	// $months = array();
-	// $months_written = array();
-	// for ($i=0; $i < 8; $i++) { 
-	// 	$months[$i] = date("01-m-Y", strtotime(" +".$i." months"));
-	// 	setlocale(LC_TIME, "nl_NL");		
-	// 	$dateObj = DateTime::createFromFormat('d-m-Y', $months[$i]);
-	// 	$months_written[$i] = strftime("%B", $dateObj->getTimestamp());
-	// }
 }
-
 ?>
 
 <section class="filter z-20 relative">
@@ -46,6 +28,7 @@ if ($_GET['maand']) {
 				</svg>
 			</span>
 		<?php } ?>
+
 		<?php $taxonomy = "mt_category"; ?>
 		<?php $name = "Categorie" ?>
 		<?php $terms = get_terms(array(
@@ -53,6 +36,7 @@ if ($_GET['maand']) {
 					'hide_empty' => false
 				)); ?>
 		<?php include($plugin_dir.'/templates/helpers/get_filter_list.php'); ?>
+
 		<?php $taxonomy = "teacher"; ?>
 		<?php $name = "Teacher" ?>
 		<?php $terms = get_terms(array(
@@ -60,6 +44,7 @@ if ($_GET['maand']) {
 					'hide_empty' => false
 				)); ?>
 		<?php include($plugin_dir.'/templates/helpers/get_filter_list.php'); ?>
+
 		<?php $taxonomy = "none"; ?>
 		<?php $name = "Datum" ?>
 		<?php $terms = ""; ?>

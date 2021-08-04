@@ -62,24 +62,6 @@ $args = array(
 	'meta_query' => $filter_date,
 	'orderby' => 'meta_value_num',
 	'order' => 'ASC'
-	// 'meta_query'  => array(
-	// 	'relation' => 'OR',
-	// 	array(
-	// 		'key'     => $meta_key,
-	// 		'compare' => 'NOT EXISTS',
-	// 	),
-	// 	array(
-	// 		'key'     => $meta_key,
-	// 		'value'   => 1,
-	// 		'compare' => '!=',
-	// 	),
-	// 	array(
-	// 		'key'     => $meta_key,
-	// 		'value'   => 1,
-	// 	),
-
-	// ),
-	// 'orderby'     => array( 'meta_value' => 'ASC', 'datum_start' => 'ASC' ),
 );
 
 $query1 = new WP_Query( $args );
