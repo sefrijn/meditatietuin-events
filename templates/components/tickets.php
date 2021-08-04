@@ -11,10 +11,10 @@ function createTicket(){
 ?>
 
 <section id="tickets">
-	<img class="bg-orange-very-light w-full" src="<?php echo $plugin_url; ?>/img/wave-orange-large.svg" alt="">
+	<img class="bg-orange-very-light w-full" style="margin-bottom:-1px;" src="<?php echo $plugin_url; ?>/img/wave-orange-large.svg" alt="">
 	<div class="bg-orange-dark">
-		<h1 class="text-4xl font-semibold text-center">Reserveer je plek</h1>
-		<h3 class="text-2xl text-center mt-3"><?php the_title(); ?></h3>
+		<h1 class="text-2xl sm:text-3xl md:text-4xl font-semibold text-center">Reserveer je plek</h1>
+		<h3 class="text-base sm:text-lg md:text-2xl text-center mt-3"><?php the_title(); ?></h3>
 		<div class="max-w-screen-sm mx-auto pb-12 pt-6">
 			<?php $tickets_code = '[paytium name="'.get_the_title().'" description="Tickets"]';
 			$tickets_code .= '[paytium_field placeholder="Voornaam" type="firstname" label="Voornaam" required="true" /]';

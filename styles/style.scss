@@ -21,7 +21,7 @@
 }
 .single-mt_events, .page-template-page-template-events-overview{
 	.label{
-		@apply text-orange-dark font-semibold font-sans text-base uppercase;
+		@apply text-orange-dark font-semibold font-sans text-sm md:text-base uppercase;
 	}
 }
 
@@ -70,7 +70,7 @@
 			opacity: 1;
 		}		
 		.pt-form-group-field-firstname, .pt-form-group-field-lastname, .pt-form-group-field-email, .pt-form-group-field-text, .pt-form-group-field-date, .pt-form-group-field-dropdown, .pt-form-group-field-textarea{
-			@apply w-1/2 px-2;
+			@apply sm:w-1/2 w-full px-2;
 			label{
 				@apply hidden;
 			}
@@ -94,10 +94,10 @@
 		.has-quantity-input{
 			@apply flex w-full mx-2 items-center relative;
 			label{
-				@apply order-1 w-1/2 text-right text-white text-2xl font-normal pr-5;
+				@apply order-1 w-5/12 sm:w-1/2 text-left sm:text-right text-white sm:text-2xl text-lg font-normal sm:pr-5;
 			}
 			.pt-quantity-amount{
-				@apply flex w-5/12 justify-between items-center order-2 text-4xl font-semibold text-orange-medium;
+				@apply flex w-6/12 sm:w-5/12 justify-between items-center order-2 text-2xl sm:text-4xl font-semibold text-orange-medium;
 				&:after{
 					@apply block text-base text-black text-opacity-30;
 					content:' aantal  ';
@@ -135,16 +135,16 @@
 		.pt-form-group-label:not(.has-quantity-input){
 			@apply w-full;
 			label{
-				@apply w-1/2 text-right text-white text-2xl font-normal pr-5 relative;
+				@apply w-5/12 sm:w-1/2 sm:text-right text-left text-white sm:text-2xl text-lg font-normal sm:pr-5 pl-2 sm:pl-0 relative;
 				span{
-					@apply absolute w-1/2 left-full text-4xl text-left font-semibold text-orange-medium-dark;
+					@apply absolute w-full left-full text-2xl sm:text-4xl text-left font-semibold text-orange-medium-dark;
 				}
 			}
 		}
 		.pt-form-group-total-amount{
-			@apply pt-4 w-full font-normal border-t-4 border-dotted border-orange-medium-dark text-2xl text-right text-white;
+			@apply px-2 sm:px-0 pt-4 w-full font-normal border-t-4 border-dotted border-orange-medium-dark text-2xl sm:text-right text-white;
 			span{
-				@apply text-4xl w-1/2 float-right text-left ml-4 text-orange-light font-bold;
+				@apply text-2xl sm:text-4xl w-7/12 sm:w-1/2 float-right text-left sm:ml-4 text-orange-light font-bold;
 			}
 		}
 		.pt-payment-btn{

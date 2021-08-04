@@ -72,7 +72,7 @@ while ( $query1->have_posts() ) {
 
 	<?php $authors = get_the_terms(get_the_ID(), 'teacher'); ?>
 	<?php $tags = get_the_terms(get_the_ID(), 'mt_category'); ?>
-	<a href="<?php echo get_the_permalink(); ?>" class="event-item block w-1/3 p-4 rounded-xl hover:bg-orange-light transition-colors hover:cursor-pointer">
+	<a href="<?php echo get_the_permalink(); ?>" class="event-item block w-full sm:w-1/2 lg:w-1/3 p-4 rounded-xl hover:bg-orange-light transition-colors hover:cursor-pointer">
 		<div class="relative h-60">
 			<img class="z-0 object-cover h-full w-full" src="<?php the_field('banner'); ?>" alt="">
 			<div class="absolute bottom-0 w-full bg-gradient-to-t from-black bg-opacity-30 z-10 text-center text-white">
@@ -83,13 +83,13 @@ while ( $query1->have_posts() ) {
 		</div>
 		<div class="text-center">
 			<h3 class="text-2xl mt-5 tracking-wide normal-case text-black font-semibold"><?php the_title(); ?></h3>
-			<p class="my-2 font-normal text-orange-medium teacher">met
+			<p class="my-2 font-normal text-orange-medium teacher text-lg">met
 				<?php 
 				foreach ( $authors as $author) { ?>
 					<span><?php echo $author->name; ?></span>
 				<?php } ?>	
 			</p>
-			<p><?php the_field('samenvatting'); ?> </p>
+			<p class="text-base"><?php the_field('samenvatting'); ?> </p>
 		</div>
 	</a>
 	<?php

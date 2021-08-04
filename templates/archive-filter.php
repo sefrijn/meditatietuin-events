@@ -24,8 +24,8 @@ foreach ( $pages as $page )
 <div class="bg-orange-very-light">
 
 	<section class="top tw-container max-w-prose mx-auto pt-12 pb-10 text-center">
-		<h1 class="text-4xl mb-6 font-semibold"><?php echo get_the_title($page_id); ?></h1>
-		<p class="text-xl text-orange-dark font-medium font-sans-alt"><?php echo get_field('subtitle',$page_id); ?></p>
+		<h1 class="text-2xl sm:text-4xl mb-6 font-semibold"><?php echo get_the_title($page_id); ?></h1>
+		<p class="text-base px-4 sm:text-xl text-orange-dark font-medium font-sans-alt"><?php echo get_field('subtitle',$page_id); ?></p>
 	</section>
 
 	<?php include($plugin_dir.'/templates/components/filter.php'); ?>

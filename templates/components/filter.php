@@ -14,7 +14,7 @@ if ($_GET['maand']) {
 ?>
 
 <section class="filter z-20 relative">
-	<div class="flex space-x-4 items-center justify-center pb-4">
+	<div class="flex flex-col sm:flex-row space-x-4 items-center justify-center pb-4">
 		<?php if(is_archive() || $filtered_month != ""){ ?>
 			<a href="<?php echo get_the_permalink($page_id); ?>" class="inline-block justify-center px-4 py-2 text-base font-medium leading-5 text-orange-dark transition duration-150 ease-in-out hover:text-gray-700 hover:bg-orange-medium focus:bg-orange-light rounded-md focus:outline-none focus:border-orange-dark active:bg-orange-medium active:text-gray-800">Verwijder filter 
 				<svg class="inline-block h-3 w-3 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="-949 951 100 125">
@@ -28,6 +28,11 @@ if ($_GET['maand']) {
 				</svg>
 			</span>
 		<?php } ?>
+
+		<?php $taxonomy = "none"; ?>
+		<?php $name = "Datum" ?>
+		<?php $terms = ""; ?>
+		<?php include($plugin_dir.'/templates/helpers/get_filter_list.php'); ?>
 
 		<?php $taxonomy = "mt_category"; ?>
 		<?php $name = "Categorie" ?>
@@ -44,10 +49,5 @@ if ($_GET['maand']) {
 					'hide_empty' => false
 				)); ?>
 		<?php include($plugin_dir.'/templates/helpers/get_filter_list.php'); ?>
-
-		<?php $taxonomy = "none"; ?>
-		<?php $name = "Datum" ?>
-		<?php $terms = ""; ?>
-		<?php include($plugin_dir.'/templates/helpers/get_filter_list.php'); ?>		
 	</div>
 </section>
