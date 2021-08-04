@@ -20,34 +20,49 @@ if(!empty($teacher)){
     	),
 	);
 }	
-$meta_key = 'frequentie';
+$meta_key = 'datum_start';
 $args = array(
 	'post_status' => array(
-		'future'
+		'publish'
 	),
 	'post_type' => 'mt_events',
 	'posts_per_page' => $events_per_page,
 	'paged' => $page_number,
 	'tax_query' => $filter_cat,
-
-	'meta_query'  => array(
+	'meta_key' => $meta_key,
+	'meta_query' => array(
 		'relation' => 'OR',
 		array(
-			'key'     => $meta_key,
-			'compare' => 'NOT EXISTS',
+			'key' => 'datum_start',
+			'compare' => '>',
+			'value' => date("Ymd")
 		),
 		array(
-			'key'     => $meta_key,
-			'value'   => 1,
-			'compare' => '!=',
-		),
-		array(
-			'key'     => $meta_key,
-			'value'   => 1,
-		),
-
+			'key' => 'event_type',
+			'compare' => '==',
+			'value' => 'herhalend'
+		)
 	),
-	'orderby'     => array( 'meta_value' => 'DESC', 'date' => 'ASC' ),
+	'orderby' => 'meta_value_num',
+	'order' => 'ASC'
+	// 'meta_query'  => array(
+	// 	'relation' => 'OR',
+	// 	array(
+	// 		'key'     => $meta_key,
+	// 		'compare' => 'NOT EXISTS',
+	// 	),
+	// 	array(
+	// 		'key'     => $meta_key,
+	// 		'value'   => 1,
+	// 		'compare' => '!=',
+	// 	),
+	// 	array(
+	// 		'key'     => $meta_key,
+	// 		'value'   => 1,
+	// 	),
+
+	// ),
+	// 'orderby'     => array( 'meta_value' => 'ASC', 'datum_start' => 'ASC' ),
 );
 
 $query1 = new WP_Query( $args );

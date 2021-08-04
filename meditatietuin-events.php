@@ -270,10 +270,11 @@ $event
     ->conditional('event_type','==','herhalend')
 ->addDatePicker('datum_start',[
             'display_format' => 'l j F Y',
-            'return_format' => 'm/d/Y'
+            'return_format' => 'Ymd'
         ])
     ->conditional('event_type','==','eenmalig')
     ->or('event_type','==','eenmaliglang')
+    ->or('event_type','==','reeks')
 ->addDatePicker('datum_end',[
             'display_format' => 'l j F Y',
             'return_format' => 'm/d/Y'
@@ -281,6 +282,8 @@ $event
     ->conditional('event_type','==','eenmaliglang')
 ->addRepeater('data',[
         'min' => 2,
+        'label' => 'Alle data in deze reeks/cursus:',
+        'button_label' => 'Voeg datum toe',
     ])
     ->conditional('event_type','==','reeks')
     ->addDatePicker('datum',[
@@ -430,7 +433,8 @@ add_action('acf/init', function() use ($overview_page) {
 */
 function add_acf_columns ( $columns ) {
    return array_merge ( $columns, array ( 
-     'field_event_datum_start' => __ ( 'Starts' ),
+     'field_event_datum_start' => __ ( 'Start Event' ),
+     'event_type' => __ ( 'Soort Event' ),
    ) );
  }
  add_filter ( 'manage_mt_events_posts_columns', 'add_acf_columns' );
@@ -438,17 +442,50 @@ function add_acf_columns ( $columns ) {
 function mt_events_custom_column ( $column, $post_id ) {
     switch ( $column ) {
         case 'field_event_datum_start':
-        if(get_field('datum_start',$post_id)){
-            echo get_field('datum_start',$post_id);
-        }elseif(get_field('data',$post_id)){
-            echo get_field('data',$post_id)[0]['datum'];
-        }elseif(get_field('frequentie',$post_id)){
-            echo get_field('frequentie',$post_id);
-        }
-        break;
+            if(get_field('datum_start',$post_id)){
+                $date_string = get_field('datum_start',$post_id);
+                $date_string = substr($date_string,4,2).'/'.substr($date_string,6,2).'/'.substr($date_string,0,4);
+                $unixtimestamp = strtotime( $date_string );
+                echo date_i18n( "j F", $unixtimestamp );
+                if(get_field('time',$post_id)){
+                    echo ' - '.get_field('time',$post_id)['start'];
+                }
+
+            // }elseif(get_field('data',$post_id)){
+            //     echo get_field('data',$post_id)[0]['datum'];
+            }elseif(get_field('frequentie',$post_id)){
+                echo get_field('frequentie',$post_id);
+                if(get_field('time',$post_id)){
+                    echo ' - '.get_field('time',$post_id)['start'];
+                }                
+            }
+            break;
+        case 'event_type':
+            echo get_field_object('event_type',$post_id)['choices'][get_field('event_type')];
+            break;
     }
 }
 add_action ( 'manage_mt_events_posts_custom_column', 'mt_events_custom_column', 10, 2 );
 
-
+add_filter( 'manage_edit-mt_events_sortable_columns', 'sortable_column' );
+function sortable_column( $columns ) {
+    $columns['field_event_datum_start'] = 'sort';
+ 
+    //To make a column 'un-sortable' remove it from the array
+    unset($columns['date']);
+    unset($columns['title']);
+ 
+    return $columns;
+}
+add_action( 'pre_get_posts', 'my_slice_orderby',99 );
+function my_slice_orderby( $query ) {
+    if( ! is_admin() && 'mt_events' != $query->get( 'post_type' )  )
+        return;
+ 
+    $orderby = $query->get( 'orderby');
+    if( 'sort' == $orderby || $_GET['post_type'] == 'mt_events') {
+        $query->set('meta_key','datum_start');
+        $query->set('orderby','meta_value_num');
+    }
+}
 ?>

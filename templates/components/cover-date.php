@@ -10,6 +10,7 @@ if(get_field('event_type') == "reeks"){
 }
 if(get_field('event_type') == "eenmalig"){
 	$date_string = get_field('datum_start');
+	$date_string = substr($date_string,4,2).'/'.substr($date_string,6,2).'/'.substr($date_string,0,4);
 	$unixtimestamp = strtotime( $date_string );
 	echo '<span>'.date_i18n( "j F", $unixtimestamp );
 	if( have_rows('time') ):
@@ -21,6 +22,7 @@ if(get_field('event_type') == "eenmalig"){
 }
 if(get_field('event_type') == "eenmaliglang"){
 	$date_string = get_field('datum_start');
+	$date_string = substr($date_string,4,2).'/'.substr($date_string,6,2).'/'.substr($date_string,0,4);
 	$unixtimestamp = strtotime( $date_string );
 	$date_string = get_field('datum_end');
 	$unixtimestamp_end = strtotime( $date_string );

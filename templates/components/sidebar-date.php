@@ -20,6 +20,7 @@
 <!-- Eenmalig -->
 <?php if(get_field('event_type') == "eenmalig"): ?>
 	<?php $date_string = get_field('datum_start'); ?>
+	<?php $date_string = substr($date_string,4,2).'/'.substr($date_string,6,2).'/'.substr($date_string,0,4); ?>	
 	<?php $unixtimestamp = strtotime( $date_string ); ?>
 
 	<p class="label">wanneer</p>
@@ -36,6 +37,7 @@
 <!-- Meerdere dagen -->
 <?php if(get_field('event_type') == "eenmaliglang"): ?>
 	<?php $date_string = get_field('datum_start'); ?>
+	<?php $date_string = substr($date_string,4,2).'/'.substr($date_string,6,2).'/'.substr($date_string,0,4); ?>	
 	<?php $unixtimestamp = strtotime( $date_string ); ?>
 	<?php $date_string = get_field('datum_end'); ?>
 	<?php $unixtimestamp_end = strtotime( $date_string ); ?>
