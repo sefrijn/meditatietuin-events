@@ -27,6 +27,8 @@
 * - Teacher Fields
 * - Overview Fields
 * Add Fields to admin area
+* - Payment Admin Fields
+* - Events Admin Fields
 */
 
 
@@ -436,6 +438,24 @@ add_action('acf/init', function() use ($overview_page) {
 > Add Fields to admin area
 
 */
+// >> Payment Admin Fields
+function add_paytium_columns ( $columns ) {
+   return array_merge ( $columns, array ( 
+     'description' => __ ( 'Event' ),
+   ) );
+ }
+ add_filter ( 'manage_pt_payment_posts_columns', 'add_paytium_columns' );
+
+function paytium_custom_column ( $column, $post_id ) {
+    switch ( $column ) {
+        case 'description':
+            echo substr(get_post_meta($post_id,'_description')[0],0,-5);
+            break;
+    }
+}
+add_action ( 'manage_pt_payment_posts_custom_column', 'paytium_custom_column', 10, 2 );
+
+// >> Events Admin Fields
 function add_acf_columns ( $columns ) {
    return array_merge ( $columns, array ( 
      'field_event_datum_start' => __ ( 'Start Event' ),
