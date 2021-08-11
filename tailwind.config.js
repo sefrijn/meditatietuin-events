@@ -12,11 +12,12 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     fontFamily: {
-      'sans': ['"Josefin Sans"', 'sans-serif'],
+      'sans': ['"Source Sans Pro"', 'sans-serif'],
       'sans-alt': ['"Raleway"', 'sans-serif'],
     },
     extend: {
       colors: {
+        'orange-very-dark' : '#D98F5E',
         'orange-dark': '#E5AB86',
         'orange-medium-dark': '#F4C5A7',
         'orange-medium': '#F0D8BB',

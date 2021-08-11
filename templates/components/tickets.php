@@ -1,19 +1,26 @@
 <?php 
 function checkLimits(){
 	if(get_sub_field('limit')){
-		return 'limit="'.get_sub_field('limit').'" item_id="'.sanitize_title(get_the_title()."-".get_sub_field('ticket_naam')).'" limit_message="<span>'.get_sub_field('ticket_naam').'</span><span>uitverkocht :(</span>" ';
+		return 'limit="'.get_sub_field('limit').'" item_id="'.sanitize_title(get_the_title()."-".get_sub_field('ticket_naam')).'" limit_message="<span>'.get_sub_field('ticket_naam').'</span><span>Uitverkocht</span>" ';
 	}
 }
 function createTicket(){
-	return 'type="label" show_amount="true" label="'.get_sub_field('ticket_naam').'" amount="'.get_sub_field('prijs').'" quantity="true" /]';
+	$btw = 21;
+	if(get_sub_field('btw')){
+		$btw = get_sub_field('btw');
+	}
+	return 'type="label" show_amount="true" label="'.get_sub_field('ticket_naam').'" amount="'.get_sub_field('prijs').'" tax="'.$btw.'" quantity="true" /]';
 }
 
 ?>
 
-<section id="tickets">
-	<img class="bg-orange-very-light w-full" style="margin-bottom:-1px;" src="<?php echo $plugin_url; ?>/img/wave-orange-large.svg" alt="">
-	<div class="bg-orange-dark">
-		<h1 class="text-2xl sm:text-3xl md:text-4xl font-semibold text-center">Reserveer je plek</h1>
+<section id="tickets" class="bg-orange-dark">
+
+	<div class="absolute w-full bg-orange-very-light">
+		<?php include($plugin_dir.'/img/wave-orange-large2.svg'); ?>	
+	</div>
+	<div class="relative z-10 pt-6">
+		<h1 class="text-2xl sm:text-4xl md:text-5xl font-semibold text-center">Reserveer je plek</h1>
 		<h3 class="text-base sm:text-lg md:text-2xl text-center mt-3"><?php the_title(); ?></h3>
 		<div class="max-w-screen-sm mx-auto pb-12 pt-6">
 			<?php $tickets_code = '[paytium name="'.get_the_title().'" description="Tickets"]';
@@ -40,9 +47,6 @@ function createTicket(){
 			if( have_rows('tickets') ){
 				while( have_rows('tickets') ){
 					the_row();
-					// echo get_sub_field('enddate');
-					// echo '<br>';
-					// echo $today;
 
 					if(get_sub_field('startdate') || get_sub_field('enddate')){
 						// Dates are set, enable only active tickets
@@ -66,7 +70,6 @@ function createTicket(){
 
 						}else{
 							// Display disabled tickets gray
-							$tickets_code .= '[paytium_field ';							
 							$tickets_code .= '[paytium_field type="label" label="'.get_sub_field('ticket_naam').'<span>€ '.get_sub_field('prijs').'</span>"/]';
 						}
 					}else{

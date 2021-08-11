@@ -31,7 +31,7 @@
 
 
 // Configuration variables
-$events_per_page = 12;
+$events_per_page = 3;
 $plugin_dir = WP_PLUGIN_DIR . '/meditatietuin-events';
 $plugin_url = WP_PLUGIN_URL . '/meditatietuin-events';
 
@@ -346,6 +346,11 @@ $event
         ])
 
 ->endRepeater()
+->addRadio('btw')
+    ->addChoice('0','0% - Vrijgesteld')
+    ->addChoice('9','9%')
+    ->addChoice('21','21%')
+    ->setDefaultValue('21')
 ->addTextarea('locatie',[
     'label' => 'Adres en/of zaal',    
     'rows' => '4',

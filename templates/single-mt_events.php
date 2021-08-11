@@ -7,7 +7,7 @@
 <section class="bg-orange-very-light">
 	<div class="tw-container flex flex-wrap items-start mx-auto px-4">
 
-		<div class="triangle-red w-full text-center py-10 text-base sm:text-lg md:text-2xl font-sans-alt tracking-widest uppercase font-light text-orange-dark category">
+		<div class="triangle-red w-full text-center py-10 text-base sm:text-lg md:text-2xl tracking-widest uppercase font-light text-orange-dark category">
 			<?php foreach ( $tags as $tag) { ?>
 				<span><?php echo $tag->name; ?></span>
 			<?php } ?>	

@@ -83,7 +83,7 @@ while ( $query1->have_posts() ) {
 		</div>
 		<div class="text-center">
 			<h3 class="text-2xl mt-5 tracking-wide normal-case text-black font-semibold"><?php the_title(); ?></h3>
-			<p class="my-2 font-normal text-orange-medium teacher text-lg">met
+			<p class="my-2 font-normal text-orange-dark teacher text-lg">met
 				<?php 
 				foreach ( $authors as $author) { ?>
 					<span><?php echo $author->name; ?></span>

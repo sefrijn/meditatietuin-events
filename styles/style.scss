@@ -2,6 +2,15 @@
 @import 'container';
 @import 'tailwindcss/utilities';
 
+@layer utilities{
+	.tw-button{
+		@apply font-normal bg-orange-medium text-orange-very-dark hover:bg-orange-dark hover:text-orange-light tracking-widest transition-colors text-center text-xl uppercase px-4 py-4;
+	}
+	.tw-button-light{
+		@apply hover:bg-orange-medium hover:text-orange-very-dark bg-orange-dark text-orange-light;
+	}	
+}
+
 .text-shadow {
 	text-shadow: 0 0 8px rgba(0,0,0,0.40);
 }
@@ -20,6 +29,7 @@
 	}
 }
 .single-mt_events, .page-template-page-template-events-overview{
+	font-family: 'Source Sans Pro', sans-serif;
 	.label{
 		@apply text-orange-dark font-semibold font-sans text-sm md:text-base uppercase;
 	}
@@ -39,24 +49,17 @@
 		visibility: visible;
 	}	
 }
-/* .tax-mt_category, .tax-teacher{
-	.top{
-		h1:last-of-type{
-			@apply text-orange-medium font-bold text-sm uppercase;
-			span{
-				@apply text-black text-3xl font-bold normal-case block;
-			}
-		}
-	}
-} */
 
 .single-mt_events{
 	.details{
 		@apply font-semibold text-base text-black text-opacity-50;
 	}
 	main{
+		h1,h2,h3,h4,h5,h6{
+			@apply text-orange-dark;
+		}
 		h2{
-			@apply text-orange-dark font-bold mt-6;
+			@apply font-bold mt-6 tracking-wide;
 		}
 		p{
 			@apply mb-2;
@@ -94,7 +97,7 @@
 		.has-quantity-input{
 			@apply flex w-full mx-2 items-center relative;
 			label{
-				@apply order-1 w-5/12 sm:w-1/2 text-left sm:text-right text-white sm:text-2xl text-lg font-normal sm:pr-5;
+				@apply order-1 w-5/12 sm:w-1/2 text-left sm:text-right text-white sm:text-2xl text-lg font-normal sm:pr-5 mb-0;
 			}
 			.pt-quantity-amount{
 				@apply flex w-6/12 sm:w-5/12 justify-between items-center order-2 text-2xl sm:text-4xl font-semibold text-orange-medium;
@@ -120,7 +123,7 @@
 						@apply text-right pr-4;
 					}
 					&:last-of-type{
-						@apply text-orange-medium text-3xl;
+						@apply text-orange-medium text-2xl;
 					}
 				}
 				width:200%;
@@ -136,8 +139,15 @@
 			@apply w-full;
 			label{
 				@apply w-5/12 sm:w-1/2 sm:text-right text-left text-white sm:text-2xl text-lg font-normal sm:pr-5 pl-2 sm:pl-0 relative;
+					&:after{
+						@apply absolute w-full left-full text-xl text-left text-orange-medium text-2xl;
+						content:'Niet meer beschikbaar';
+					}
+
 				span{
-					@apply absolute w-full left-full text-2xl sm:text-4xl text-left font-semibold text-orange-medium-dark;
+
+					@apply absolute w-full left-full text-xl text-left font-semibold text-orange-medium-dark hidden;
+
 				}
 			}
 		}
@@ -148,7 +158,9 @@
 			}
 		}
 		.pt-payment-btn{
-			@apply bg-orange-light text-orange-dark hover:bg-orange-very-light rounded-none mx-auto;	
+			@apply tw-button hover:bg-orange-very-dark rounded-none mx-auto;
+/* 			@apply font-normal bg-orange-medium text-orange-very-dark hover:bg-orange-dark hover:text-orange-light tracking-widest transition-colors text-center text-xl uppercase px-4 py-4;
+ */			/* @apply bg-orange-light text-orange-dark hover:bg-orange-very-light rounded-none mx-auto;	 */
 		}		
 	}
 }
