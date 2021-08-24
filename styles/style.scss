@@ -35,6 +35,10 @@
 	}
 }
 
+#event-list .event-item img{
+	@apply h-full;
+}
+
 .page-template-page-template-events-overview, .tax-mt_category, .tax-teacher{
 	.event-item{
 		&:hover{
@@ -51,6 +55,7 @@
 }
 
 .single-mt_events{
+	@apply font-sans;
 	.details{
 		@apply font-semibold text-base text-black text-opacity-50;
 	}
@@ -83,7 +88,7 @@
 			@apply mt-4 text-lg;
 		}		
 		p{
-			@apply mb-2;
+			@apply mb-2 font-sans;
 		}
 		ul,ol{
 			@apply mb-2;			

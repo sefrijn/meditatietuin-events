@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Events - De Meditatietuin
  * Description: Custom build event & ticket system, including safe payments using Paytium & Mollie. Optimised for De Meditatietuin.
- * Version: 0.1
+ * Version: 0.9
  * Author: How About Yes - Sefrijn
  * Author URI: https://howaboutyes.com
  */
@@ -31,9 +31,12 @@
 * - Events Admin Fields
 */
 
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly.
+}
 
 // Configuration variables
-$events_per_page = 3;
+$events_per_page = 9;
 $plugin_dir = WP_PLUGIN_DIR . '/meditatietuin-events';
 $plugin_url = WP_PLUGIN_URL . '/meditatietuin-events';
 
@@ -48,6 +51,9 @@ if ( is_readable( __DIR__ . '/vendor/autoload.php' ) ) {
     require __DIR__ . '/vendor/autoload.php';
 }
 use StoutLogic\AcfBuilder\FieldsBuilder;
+
+include($plugin_dir.'/templates/elementor-block.php');
+
 
 /*
 

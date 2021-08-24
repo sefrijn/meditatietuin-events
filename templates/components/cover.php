@@ -2,7 +2,7 @@
 	<img class="z-0 absolute object-cover h-full w-full" src="<?php the_field('banner'); ?>" alt="">
 	<div class="bg-black bg-opacity-30 max-width-prose mx-auto py-24 relative z-10 text-center text-white">
 		<h1 class="text-shadow text-2xl sm:text-4xl lg:text-6xl text-white font-semibold"><?php the_title(); ?></h1>
-		<p class="text-shadow mt-4 -mb-1 label">door</p>
+		<p class="text-shadow mt-4 -mb-1 label">met</p>
 		<h2 class="text-shadow text-lg sm:text-2xl md:text-3xl text-orange-light teacher font-semibold normal-case tracking-wide">
 			<?php 
 			foreach ( $authors as $author) { ?>
