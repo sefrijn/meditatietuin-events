@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Events - De Meditatietuin
  * Description: Custom build event & ticket system, including safe payments using Paytium & Mollie. Optimised for De Meditatietuin.
- * Version: 0.9
+ * Version: 1.0
  * Author: How About Yes - Sefrijn
  * Author URI: https://howaboutyes.com
  */
@@ -448,6 +448,7 @@ add_action('acf/init', function() use ($overview_page) {
 function add_paytium_columns ( $columns ) {
    return array_merge ( $columns, array ( 
      'description' => __ ( 'Event' ),
+     'name' => __('Name'),
    ) );
  }
  add_filter ( 'manage_pt_payment_posts_columns', 'add_paytium_columns' );
@@ -457,6 +458,10 @@ function paytium_custom_column ( $column, $post_id ) {
         case 'description':
             echo substr(get_post_meta($post_id,'_description')[0],0,-5);
             break;
+        case 'name':
+            echo get_post_meta($post_id,'_pt-customer-name')[0];
+            break;
+
     }
 }
 add_action ( 'manage_pt_payment_posts_custom_column', 'paytium_custom_column', 10, 2 );
