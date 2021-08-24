@@ -55,14 +55,50 @@
 		@apply font-semibold text-base text-black text-opacity-50;
 	}
 	main{
+		> div > :first-child{
+			@apply mt-0;
+		}
+		a{
+			@apply font-semibold hover:underline transition-colors;
+		}
 		h1,h2,h3,h4,h5,h6{
-			@apply text-orange-dark;
+			@apply text-orange-dark tracking-wide font-semibold font-sans-alt normal-case mb-1;
+		}
+		h1{
+			@apply mt-6 text-4xl;
 		}
 		h2{
-			@apply font-bold mt-6 tracking-wide;
+			@apply mt-6 text-3xl;
 		}
+		h3{
+			@apply mt-5 text-2xl;
+		}
+		h4{
+			@apply mt-4 text-xl;
+		}		
+		h5{
+			@apply mt-4 text-lg;
+		}
+		h6{
+			@apply mt-4 text-lg;
+		}		
 		p{
 			@apply mb-2;
+		}
+		ul,ol{
+			@apply mb-2;			
+		}
+		ul{
+			@apply list-disc list-inside;
+		}
+		ol{
+			@apply list-decimal list-inside;
+		}
+		blockquote p{
+			@apply text-orange-medium font-sans-alt font-bold italic text-3xl;
+			&:before, &:after{
+				content:'"';
+			}
 		}
 	}
 
