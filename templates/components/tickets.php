@@ -23,7 +23,7 @@ function createTicket(){
 		<h1 class="text-2xl sm:text-4xl md:text-5xl font-semibold text-center">Reserveer je plek</h1>
 		<h3 class="text-base sm:text-lg md:text-2xl text-center mt-3"><?php the_title(); ?></h3>
 		<div class="max-w-screen-sm mx-auto pb-12 pt-6">
-			<?php $tickets_code = '[paytium name="'.get_the_title().'" description="'.get_the_title().' ('.$short_date.')"]';
+			<?php $tickets_code = '[paytium name="'.get_the_title().' ('.$short_date.')" description="'.get_the_title().' ('.$short_date.')"]';
 			$tickets_code .= '[paytium_field placeholder="Voornaam" type="firstname" label="Voornaam" required="true" /]';
 			$tickets_code .= '[paytium_field placeholder="Achternaam" type="lastname" label="Achternaam" required="true" /]';
 			$tickets_code .= '[paytium_field placeholder="Email" type="email" label="Email" required="true" /]';
