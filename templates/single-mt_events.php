@@ -1,6 +1,7 @@
 <?php get_header(); ?>
 <?php $authors = get_the_terms(get_the_ID(), 'teacher'); ?>
 <?php $tags = get_the_terms(get_the_ID(), 'mt_category'); ?>
+<?php $unixtimestamp = "0"; ?>
 <div class="overflow-hidden">
 
 	<?php include($plugin_dir.'/templates/components/cover.php'); ?>

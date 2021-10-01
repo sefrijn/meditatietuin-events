@@ -1,7 +1,11 @@
 <?php 
+$ticket_date = date_i18n( "ymd", $unixtimestamp );
+
 function checkLimits(){
+	global $unixtimestamp;
 	if(get_sub_field('limit')){
-		return 'limit="'.get_sub_field('limit').'" item_id="'.sanitize_title(get_the_title()."-".get_sub_field('ticket_naam')).'" limit_message="<span>'.get_sub_field('ticket_naam').'</span><span>Uitverkocht</span>" ';
+		$r = 'limit="'.get_sub_field('limit').'" item_id="'.sanitize_title(get_the_title()."-".get_sub_field('ticket_naam'))."-".$unixtimestamp.'" limit_message="<span>'.get_sub_field('ticket_naam').'</span><span>Uitverkocht</span>" ';
+		return $r;
 	}
 }
 function createTicket(){
@@ -23,7 +27,7 @@ function createTicket(){
 		<h1 class="text-2xl sm:text-4xl md:text-5xl font-semibold text-center">Reserveer je plek</h1>
 		<h3 class="text-base sm:text-lg md:text-2xl text-center mt-3"><?php the_title(); ?></h3>
 		<div class="max-w-screen-sm mx-auto pb-12 pt-6">
-			<?php $tickets_code = '[paytium name="'.get_the_title().' ('.$short_date.')" description="'.get_the_title().' ('.$short_date.')"]';
+			<?php $tickets_code = '[paytium name="'.get_the_title().' ('.$ticket_date.')" description="'.get_the_title().' ('.$ticket_date.')"]';
 			$tickets_code .= '[paytium_field placeholder="Voornaam" type="firstname" label="Voornaam" required="true" /]';
 			$tickets_code .= '[paytium_field placeholder="Achternaam" type="lastname" label="Achternaam" required="true" /]';
 			$tickets_code .= '[paytium_field placeholder="Email" type="email" label="Email" required="true" /]';
