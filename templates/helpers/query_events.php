@@ -2,6 +2,10 @@
 
 $sort_by = "";
 $filter_cat = array();
+$today = strtotime(date("Ymd"));
+if($today > $time && isset($daterange_start)){
+	$daterange_start = date("d-m-Y");
+}
 if(!empty($mt_category)){
 	$filter_cat = array(
     	array(

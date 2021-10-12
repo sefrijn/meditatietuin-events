@@ -16,8 +16,9 @@ jQuery( () => {
 	jQuery('#event-list').attr('data-page-number',page_number);
 	if(page_number >= total_pages){
 		jQuery('.loadmore_end').show();
+		jQuery('.loadmore').hide();
 	}else{
-		jQuery('.loadmore').show();		
+		jQuery('.loadmore').show();
 	}
 
 	jQuery('.loadmore ').click(function(e){

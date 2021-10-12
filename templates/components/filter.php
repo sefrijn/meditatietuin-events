@@ -16,16 +16,11 @@ if ($_GET['maand']) {
 <section class="filter z-20 relative">
 	<div class="flex flex-col sm:flex-row space-x-4 items-center justify-center pb-4">
 		<?php if(is_archive() || $filtered_month != ""){ ?>
-			<a href="<?php echo get_the_permalink($page_id); ?>" class="inline-block justify-center px-4 py-2 text-base font-medium leading-5 text-orange-dark transition duration-150 ease-in-out hover:text-gray-700 hover:bg-orange-medium focus:bg-orange-light rounded-md focus:outline-none focus:border-orange-dark active:bg-orange-medium active:text-gray-800">Verwijder filter 
-				<svg class="inline-block h-3 w-3 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="-949 951 100 125">
-					<path d="M-851.5 966.2l-12.7-12.7-34.8 34.8-34.8-34.8-12.7 12.7 34.8 34.8-34.8 34.8 12.7 12.7 34.8-34.8 34.8 34.8 12.7-12.7-34.8-34.8z"/>
-				</svg>
+			<a href="<?php echo get_the_permalink($page_id); ?>" class="inline-block justify-center px-4 py-2 text-base font-medium leading-5 text-orange-dark transition duration-150 ease-in-out hover:text-gray-700 hover:bg-orange-medium focus:bg-orange-light rounded-md focus:outline-none focus:border-orange-dark active:bg-orange-medium active:text-gray-800">Verwijder filter
+				<span style="line-height: 10px;position: relative;top: 3px;" class="text-2xl">&#215;</span>
 			</a>
 		<?php }else{ ?>
-			<span class="inline-block justify-center px-4 py-2 text-base font-medium leading-5 text-orange-dark transition duration-150 ease-in-out rounded-md">Filter Events 
-				<svg class="inline-block h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 40">
-				    <path d="M3 7h1v2a1 1 0 001 1h6a1 1 0 001-1V7h17a1 1 0 000-2H12V3a1 1 0 00-1-1H5a1 1 0 00-1 1v2H3a1 1 0 000 2zm3-3h4v4H6V4zM29 15h-3v-2a1 1 0 00-1-1h-6a1 1 0 00-1 1v2H3a1 1 0 000 2h15v2a1 1 0 001 1h6a1 1 0 001-1v-2h3a1 1 0 000-2zm-5 3h-4v-4h4v4zM29 25H16v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2H3a1 1 0 000 2h5v2a1 1 0 001 1h6a1 1 0 001-1v-2h13a1 1 0 000-2zm-15 3h-4v-4h4v4z"/>
-				</svg>
+			<span class="inline-block justify-center px-4 py-2 text-base font-medium leading-5 text-orange-dark transition duration-150 ease-in-out rounded-md">Filter Events
 			</span>
 		<?php } ?>
 
@@ -36,18 +31,66 @@ if ($_GET['maand']) {
 
 		<?php $taxonomy = "mt_category"; ?>
 		<?php $name = "Categorie" ?>
-		<?php $terms = get_terms(array(
-					'taxonomy' => $taxonomy,
-					'hide_empty' => false
-				)); ?>
+
+
+
+		<?php 
+		// Get all future events
+		$filter_date = array(
+			'relation' => 'OR',
+			array(
+				'key' => 'datum_start',
+				'compare' => '>',
+				'value' => date("Ymd")
+			),
+			array(
+				'key' => 'event_type',
+				'compare' => '==',
+				'value' => 'herhalend'
+			)
+		);
+		$args = array(
+			'post_status' => array(
+				'publish'
+			),
+			'post_type' => 'mt_events',
+			'posts_per_page' => 1000,
+			'meta_query' => $filter_date,
+		);
+		$query_filter = new WP_Query( $args );
+
+		// Create empty term array
+		$term_list = array();
+
+		// Loop through and get terms for specific event and add to term array
+		while ( $query_filter->have_posts() ) {
+			$query_filter->the_post();
+			$term_list = array_merge($term_list,get_the_terms(get_the_ID(),$taxonomy));
+		}
+
+		// Remove duplicates
+		$terms = array_unique($term_list, SORT_REGULAR);
+
+		 ?>
 		<?php include($plugin_dir.'/templates/helpers/get_filter_list.php'); ?>
 
 		<?php $taxonomy = "teacher"; ?>
 		<?php $name = "Teacher" ?>
-		<?php $terms = get_terms(array(
-					'taxonomy' => $taxonomy,
-					'hide_empty' => false
-				)); ?>
+		<?php 
+		$term_list = array();
+		while ( $query_filter->have_posts() ) {
+			$query_filter->the_post();
+			$term_list = array_merge($term_list,get_the_terms(get_the_ID(),$taxonomy));
+		}
+
+		// Remove duplicates
+		$terms = array_unique($term_list, SORT_REGULAR);
+
+		 ?>
 		<?php include($plugin_dir.'/templates/helpers/get_filter_list.php'); ?>
+		<?php
+		// Reset filter query
+		wp_reset_postdata();
+		 ?>
 	</div>
 </section>

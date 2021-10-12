@@ -15,6 +15,6 @@ if(isset($filtered_month_english)){
 </section>
 
 <div class="text-center w-full py-12" data-max-pages="<?php echo $total_pages; ?>">
-	<a href="#" class="loadmore mt-5 hidden mx-auto tw-button">Meer laden...</a>
+	<a href="#" class="loadmore mt-5 mx-auto tw-button">Meer laden...</a>
 	<p class="text-center text-orange-medium-dark uppercase font-base loadmore_end hidden">Dit zijn alle evenementen</p>
 </div>

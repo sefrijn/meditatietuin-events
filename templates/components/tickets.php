@@ -10,8 +10,8 @@ function checkLimits(){
 }
 function createTicket(){
 	$btw = 21;
-	if(get_sub_field('btw')){
-		$btw = get_sub_field('btw');
+	if(get_field('btw')){
+		$btw = get_field('btw');
 	}
 	return 'type="label" show_amount="true" label="'.get_sub_field('ticket_naam').'" amount="'.get_sub_field('prijs').'" tax="'.$btw.'" quantity="true" /]';
 }
@@ -32,6 +32,11 @@ function createTicket(){
 			$tickets_code .= '[paytium_field placeholder="Achternaam" type="lastname" label="Achternaam" required="true" /]';
 			$tickets_code .= '[paytium_field placeholder="Email" type="email" label="Email" required="true" /]';
 			$tickets_code .= '[paytium_field placeholder="Telefoon" type="text" label="Telefoon" /]';
+			$btw_hidden = 21;
+			if(get_field('btw')){
+				$btw_hidden = get_field('btw');
+			}
+			$tickets_code .= '[paytium_field type="hidden" label="BTW" default="'.$btw_hidden.'" /]';
 			if(get_field('extra_velden')['geboortedatum'] && get_field('extra_velden')['geboortedatum'] != "") {
 				$tickets_code .= '[paytium_field placeholder="Geboortedatum (dd-mm-yy)" type="date" label="Geboortedatum" required="true" /]';
 			}

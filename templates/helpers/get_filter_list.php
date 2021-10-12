@@ -16,7 +16,7 @@ if($taxonomy == "none"){
 	><button class="<?php if($active){ echo 'bg-orange-light '; } ?>inline-flex justify-center w-full px-4 py-2 text-base font-medium leading-5 text-gray-700 transition duration-150 ease-in-out hover:bg-orange-medium focus:bg-orange-light rounded-md focus:outline-none focus:border-orange-dark active:bg-orange-medium active:text-gray-800" 
 	type="button" aria-haspopup="true" aria-expanded="true" aria-controls="headlessui-menu-items-117">
 	<span><?php echo ucfirst($name); ?></span>
-	<svg class="w-5 h-5 ml-2 -mr-1" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+	<span style="line-height: 15px;position: relative;top: 3px; margin-left:4px;" class=""> &#9662;</span>
 	</button
 	></span>
 	<div class="opacity-0 relative z-20 invisible dropdown-menu transition-all duration-300 transform origin-top-right -translate-y-2 scale-95">
