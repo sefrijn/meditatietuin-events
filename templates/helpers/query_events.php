@@ -34,7 +34,7 @@ if(isset($daterange_start)){
 		'relation' => 'OR',
 		array(
 			'key' => 'datum_start',
-			'compare' => '>',
+			'compare' => '>=',
 			'value' => date("Ymd")
 		),
 		array(

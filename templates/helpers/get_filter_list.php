@@ -31,11 +31,13 @@ if($taxonomy == "none"){
 					$current_month = date('01-m-Y');
 					$months = array();
 					$months_written = array();
+					$formatter = new IntlDateFormatter('nl_NL', IntlDateFormatter::SHORT, IntlDateFormatter::SHORT);
+					$formatter->setPattern('MMMM-yyyy');
 					for ($i=0; $i < 8; $i++) { 
 						$months[$i] = date("01-m-Y", strtotime(" +".$i." months"));
 						setlocale(LC_TIME, "nl_NL");		
 						$dateObj = DateTime::createFromFormat('d-m-Y', $months[$i]);
-						$months_written[$i] = strftime("%B-%G", $dateObj->getTimestamp());
+						$months_written[$i] = $formatter->format($dateObj);
 					}
 					foreach ($months_written as $index => $month_name) {
 						 ?>
