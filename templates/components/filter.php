@@ -58,14 +58,15 @@ if ($_GET['maand']) {
 			'meta_query' => $filter_date,
 		);
 		$query_filter = new WP_Query( $args );
-
 		// Create empty term array
 		$term_list = array();
 
 		// Loop through and get terms for specific event and add to term array
 		while ( $query_filter->have_posts() ) {
 			$query_filter->the_post();
-			$term_list = array_merge($term_list,get_the_terms(get_the_ID(),$taxonomy));
+			if(is_array(get_the_terms(get_the_ID(),$taxonomy))){
+				$term_list = array_merge($term_list,get_the_terms(get_the_ID(),$taxonomy));
+			}
 		}
 
 		// Remove duplicates
@@ -80,7 +81,9 @@ if ($_GET['maand']) {
 		$term_list = array();
 		while ( $query_filter->have_posts() ) {
 			$query_filter->the_post();
-			$term_list = array_merge($term_list,get_the_terms(get_the_ID(),$taxonomy));
+			if(is_array(get_the_terms(get_the_ID(),$taxonomy))){
+				$term_list = array_merge($term_list,get_the_terms(get_the_ID(),$taxonomy));
+			}
 		}
 
 		// Remove duplicates
