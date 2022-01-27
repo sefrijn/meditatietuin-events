@@ -229,7 +229,7 @@ function mt_style(){
 > Script
 
 */
-wp_register_script('app_js', plugin_dir_url(__FILE__) . 'dist/scripts/app.js',array('jquery'));
+wp_register_script('app_js', plugin_dir_url(__FILE__) . 'scripts/app.js',array('jquery'));
 add_action( 'wp_enqueue_scripts', 'mt_script', 0 );
 function mt_script(){
     wp_enqueue_script('app_js');
